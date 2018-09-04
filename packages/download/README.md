@@ -1,7 +1,5 @@
 # Taskfire Cli
 
-[![Build Status](https://travis-ci.org/Taskbird/taskbird-node.svg?branch=master)](https://travis-ci.org/Taskbird/taskbird-node) [![Coverage Status](https://coveralls.io/repos/github/Taskbird/taskbird-node/badge.svg?branch=master)](https://coveralls.io/github/Taskbird/taskbird-node?branch=master)
-
 A command line client for Dockbot.
 
 Install with:
