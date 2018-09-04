@@ -1,0 +1,96 @@
+{
+  "name": "taskfire-cli-builder",
+  "version": "0.1.2",
+  "description": "NodeJS Client for Taskbird",
+  "repository": "https://github.com/Taskbird/taskbird-cli",
+  "author": "Calum Moore",
+  "license": "Apache-2.0",
+  "private": true,
+  "main": "lib/index.js",
+  "scripts": {
+    "test": "jest ./src --coverage --runInBand",
+    "coveralls": "cat ./coverage/lcov.info | coveralls",
+    "nyc:coverage": "NODE_ENV=test nyc --reporter=html jest ./src",
+    "test:watch": "jest --watchAll",
+    "test:e2e": "NODE_ENV=development jest e2e --runInBand",
+    "test:e2e:prod": "NODE_ENV=production jest e2e --runInBand",
+    "build": "babel src --ignore .spec.js -d lib && chmod +x lib/index.js",
+    "build-download": "babel download/src --ignore .spec.js -d download/dist && chmod +x lib/index.js",
+    "cmd": "yarn build && node ./lib/index.js",
+    "bundle": "rm -rf packed && yarn build && pkg lib/index.js -c package.json -o packed/taskfire --options no-warnings",
+    "prepublish": "yarn run build",
+    "build2": "webpack --context download --config download/webpack.config.js"
+  },
+  "bin": {
+    "taskfire": "download/dist/taskfire"
+  },
+  "pkg": {
+    "scripts": [
+      "lib/**/*.js"
+    ],
+    "targets": [
+      "node9-alpine-x64",
+      "node9-linux-x64",
+      "node9-macos-x64",
+      "node9-win-x64"
+    ]
+  },
+  "dependencies": {
+    "async-retry": "^1.2.1",
+    "chalk": "^2.4.1",
+    "cli-select": "^1.0.2",
+    "cli-table2": "^0.2.0",
+    "coveralls": "^3.0.0",
+    "death": "^1.1.0",
+    "dotenv": "^6.0.0",
+    "find-up": "^3.0.0",
+    "fs-extra": "^7.0.0",
+    "git-repo-name": "^0.6.0",
+    "glob-gitignore": "^1.0.9",
+    "ignore": "^5.0.2",
+    "ignore-by-default": "^1.0.1",
+    "js-yaml": "^3.12.0",
+    "load-json-file": "^5.0.0",
+    "lodash": "^4.17.10",
+    "node-fetch": "^2.2.0",
+    "prompt": "^1.0.0",
+    "sha.js": "^2.4.11",
+    "taskfire": "^0.1.8",
+    "which-promise": "^1.0.0",
+    "write-json-file": "^3.0.1",
+    "yargs": "^12.0.1"
+  },
+  "jest": {
+    "restoreMocks": true,
+    "setupFiles": [
+      "./jest-setup"
+    ]
+  },
+  "devDependencies": {
+    "babel-cli": "^6.24.1",
+    "babel-eslint": "^8.0.2",
+    "babel-jest": "^20.0.3",
+    "babel-loader": "7",
+    "babel-plugin-external-helpers": "^6.22.0",
+    "babel-plugin-istanbul": "^4.1.6",
+    "babel-plugin-transform-class-properties": "^6.24.1",
+    "babel-plugin-transform-export-extensions": "^6.22.0",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
+    "babel-preset-env": "^1.5.2",
+    "babel-preset-flow": "^6.23.0",
+    "babel-preset-latest-node": "^0.4.0",
+    "babel-preset-stage-0": "^6.24.1",
+    "eslint": "^4.11.0",
+    "eslint-config-airbnb": "^16.1.0",
+    "eslint-plugin-import": "^2.8.0",
+    "eslint-plugin-jsx-a11y": "^6.0.2",
+    "eslint-plugin-react": "^7.4.0",
+    "flow-bin": "^0.44.2",
+    "jest": "^23.3.0",
+    "lerna": "^3.2.1",
+    "nyc": "^12.0.2",
+    "pkg": "4.3.0",
+    "webpack": "^4.17.2",
+    "webpack-cli": "^3.1.0"
+  }
+}
