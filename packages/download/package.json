@@ -1,6 +1,6 @@
 {
   "name": "taskfire-cli",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "description": "NodeJS Client for Taskbird",
   "repository": "https://github.com/Taskbird/taskbird-cli",
   "author": "Calum Moore",
