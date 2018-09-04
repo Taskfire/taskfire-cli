@@ -14,10 +14,11 @@
     "test:watch": "jest --watchAll",
     "test:e2e": "NODE_ENV=development jest e2e --runInBand",
     "test:e2e:prod": "NODE_ENV=production jest e2e --runInBand",
+    "gzip": "ls packed/taskfire* | xargs gzip",
     "build": "babel src --ignore .spec.js -d lib && chmod +x lib/index.js",
     "build-download": "babel download/src --ignore .spec.js -d download/dist && chmod +x lib/index.js",
     "cmd": "yarn build && node ./lib/index.js",
-    "bundle": "rm -rf packed && yarn build && pkg lib/index.js -c package.json -o packed/taskfire --options no-warnings",
+    "bundle": "rm -rf packed && yarn build && pkg lib/index.js -c package.json -o packed/taskfire --options no-warnings && yarn gzip",
     "prepublish": "yarn run build",
     "build2": "webpack --context download --config download/webpack.config.js"
   },
