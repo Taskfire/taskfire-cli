@@ -20,7 +20,7 @@ import {
   enableProgress,
   info,
   showProgress,
-  warn
+  warn,
 } from './log'
 
 fetch.Promise = Promise
@@ -31,17 +31,17 @@ if (detectAlpine()) platform = 'alpine'
 const packageDir = path.join(__dirname, '..', '..')
 const packageJSON = readPkg.sync(packageDir)
 
-const now = path.join(__dirname, 'now')
-const targetWin32 = path.join(__dirname, 'now.exe')
-const target = platform === 'win32' ? targetWin32 : now
+const taskfire = path.join(__dirname, 'taskfire')
+const targetWin32 = path.join(__dirname, 'taskfire.exe')
+const target = platform === 'win32' ? targetWin32 : taskfire
 const partial = target + '.partial'
 const backup = target + '.' + packageJSON.version + '.backup'
 
 const platformToName = {
-  alpine: 'now-alpine',
-  darwin: 'now-macos',
-  linux: 'now-linux',
-  win32: 'now-win.exe'
+  alpine: 'taskfire-alpine',
+  darwin: 'taskfire-macos',
+  linux: 'taskfire-linux',
+  win32: 'taskfire-win.exe'
 }
 
 function detectAlpine () {
@@ -54,16 +54,16 @@ function detectAlpine () {
 async function download() {
   try {
     fs.writeFileSync(
-      now,
+      taskfire,
       '#!/usr/bin/env node\n' +
-        'console.log("Please wait until the \'now\' installation completes!")\n'
+        'console.log("Please wait until the \'taskfire-cli\' installation completes!")\n'
     )
   } catch (err) {
     if (err.code === 'EACCES') {
       warn(
-        'Please try installing Now CLI again with the `--unsafe-perm` option.'
+        'Please try installing Taskfire CLI again with the `--unsafe-perm` option.'
       )
-      info('Example: `npm i -g --unsafe-perm now`')
+      info('Example: `npm i -g --unsafe-perm taskfire-cli`')
 
       process.exit()
     }
@@ -73,26 +73,26 @@ async function download() {
 
   onDeath(() => {
     fs.writeFileSync(
-      now,
+      taskfire,
       '#!/usr/bin/env node\n' +
-        'console.log("The \'now\' installation did not complete successfully.")\n' +
-        'console.log("Please run \'npm i -g now\' to reinstall!")\n'
+        'console.log("The \'taskfire\' installation did not complete successfully.")\n' +
+        'console.log("Please run \'npm i -g taskfire-cli\' to reinstall!")\n'
     )
     process.exit()
   })
 
-  info('For the source code, check out: https://github.com/zeit/now-cli')
+  info('For the source code, check out: https://github.com/Taskfire/taskfire-cli')
 
   // Print an empty line
   console.log('')
 
   await retry(async () => {
-    enableProgress('Downloading Now CLI ' + packageJSON.version)
+    enableProgress('Downloading Taskfire CLI ' + packageJSON.version)
     showProgress(0)
 
     try {
       const name = platformToName[platform]
-      const url = `https://github.com/zeit/now-cli/releases/download/${packageJSON.version}/${name}.gz`
+      const url = `https://github.com/Taskfire/taskfire-cli/releases/download/${packageJSON.version}/${name}.gz`
       const resp = await fetch(url, { compress: false })
 
       if (resp.status !== 200) {
@@ -151,7 +151,7 @@ function modifyGitBashFile (content) {
       'esac\n' +
       '\n' +
     content.replace(
-      'download/dist/now"', 'download/dist/now.exe"'));
+      'download/dist/taskfire"', 'download/dist/taskfire.exe"'));
 }
 
 async function main() {
@@ -163,12 +163,12 @@ async function main() {
 
   if (platform === 'win32') {
     try {
-      fs.writeFileSync(now, '')
+      fs.writeFileSync(taskfire, '')
       // Workaround for https://github.com/npm/cmd-shim/pull/25
       const globalPath = path.dirname(await which('npm'))
-      let gitBashFile = path.join(globalPath, 'now')
+      let gitBashFile = path.join(globalPath, 'taskfire')
       if (!fs.existsSync(gitBashFile)) {
-        gitBashFile = path.join(process.env.APPDATA, 'npm/now');
+        gitBashFile = path.join(process.env.APPDATA, 'npm/taskfire');
       }
 
       fs.writeFileSync(
@@ -181,7 +181,7 @@ async function main() {
       }
     }
   } else {
-    plusxSync(now)
+    plusxSync(taskfire)
   }
 }
 
