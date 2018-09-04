@@ -11,7 +11,6 @@ export default async function createClient (args, requireAuth, requireSite = fal
 
   const client = taskfire(auth.token, {
     projectId: projectName,
-    url: 'http://localhost:4000',
     // debug: true,
   })
 
