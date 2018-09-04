@@ -92,7 +92,7 @@ async function download() {
 
     try {
       const name = platformToName[platform]
-      const url = `https://github.com/Taskfire/taskfire-cli/releases/download/${packageJSON.version}/${name}.gz`
+      const url = `https://github.com/Taskfire/taskfire-cli/releases/download/v${packageJSON.version}/${name}.gz`
       const resp = await fetch(url, { compress: false })
 
       if (resp.status !== 200) {
