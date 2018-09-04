@@ -6,22 +6,26 @@
   "author": "Calum Moore",
   "license": "Apache-2.0",
   "files": [
-    "dist"
+    "dist",
+    "install.js"
   ],
   "scripts": {
     "build": "babel ./src --ignore .spec.js -d dist",
     "prepublish": "yarn run build",
-    "postinstall": "node download/install.js"
+    "postinstall": "node ./install.js"
   },
   "bin": {
     "taskfire": "dist/taskfire"
   },
   "dependencies": {
+    "assert": "^1.4.1",
     "async-retry": "^1.2.1",
     "chalk": "^2.4.1",
     "death": "^1.1.0",
     "node-fetch": "^2.2.0",
-    "which-promise": "^1.0.0"
+    "read-pkg": "^4.0.1",
+    "which-promise": "^1.0.0",
+    "zlib": "^1.0.5"
   },
   "devDependencies": {
     "babel-cli": "^6.24.1",
