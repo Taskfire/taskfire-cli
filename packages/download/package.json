@@ -10,7 +10,8 @@
   ],
   "scripts": {
     "build": "babel ./src --ignore .spec.js -d dist",
-    "prepublish": "yarn run build"
+    "prepublish": "yarn run build",
+    "postinstall": "node download/install.js"
   },
   "bin": {
     "taskfire": "dist/taskfire"
