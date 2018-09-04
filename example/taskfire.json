@@ -1,0 +1,10 @@
+{
+  "steps": [
+    {
+      "build": "./step1"
+    },
+    {
+      "build": "./step2"
+    }
+  ]
+}
