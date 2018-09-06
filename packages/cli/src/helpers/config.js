@@ -6,6 +6,10 @@ import writeJsonFile from 'write-json-file'
 import get from 'lodash/get'
 import set from 'lodash/set'
 
+const dirName = process.env.NODE_ENV === 'development'
+  ? '.taskfire.dev'
+  : '.taskfire'
+
 const defaultAuth = {
   _: 'This is your Taskfire credentials file. DON\'T SHARE!',
   credentials: {},
@@ -22,7 +26,7 @@ export default function getConfigPath (args) {
   if (configPath) {
     return path.resolve(configPath)
   }
-  return path.resolve(homedir(), './.taskfire')
+  return path.resolve(homedir(), `./${dirName}'`)
 }
 
 export async function getAuthConfig (args) {
