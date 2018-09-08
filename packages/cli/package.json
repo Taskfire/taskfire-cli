@@ -53,6 +53,7 @@
     "load-json-file": "^5.0.0",
     "lodash": "^4.17.10",
     "node-fetch": "^2.2.0",
+    "promise-callbacks": "^3.1.0",
     "prompt": "^1.0.0",
     "sha.js": "^2.4.11",
     "taskfire": "^0.1.8",

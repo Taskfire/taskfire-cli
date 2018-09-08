@@ -1,18 +1,21 @@
 #!/usr/bin/env node
 
 import yargs from 'yargs'
-// import chalk from 'chalk'
 import flows from './cmds/flows'
+import projects from './cmds/projects'
 import login from './cmds/login'
 import runs from './cmds/runs'
 import deploy from './cmds/deploy'
+import config from './cmds/config'
 
 yargs
   .usage('Usage: taskfire <command> [options]')
   .scriptName('taskfire')
   .command(flows)
+  .command(projects)
   .command(runs)
   .command(deploy)
+  .command(config)
   .command(login)
   .option('token', {
     alias: 't',
