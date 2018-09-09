@@ -12,6 +12,7 @@ coverage
 packed
 dist
 lib
+dev
 
 # logs
 npm-debug.log

@@ -1,0 +1,15 @@
+{
+  "name": "step-1",
+  "version": "1.0.0",
+  "description": "An example flow repo",
+  "main": "index.js",
+  "scripts": {
+    "start": "NODE_ENV=production node src/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "chalk": "^2.4.1"
+  }
+}

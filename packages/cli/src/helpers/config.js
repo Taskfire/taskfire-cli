@@ -43,7 +43,6 @@ export async function addAuthConfig (args, username, token) {
 
   if (!auth) {
     auth = defaultAuth
-    auth.defaultAuth = username
   }
 
   // Update the auth config
@@ -51,6 +50,9 @@ export async function addAuthConfig (args, username, token) {
     type: 'jwt',
     token,
   }
+  auth.defaultAuth = username
+
+  await setBasicConfig('defaultProject', null)
 
   // Save the file
   return writeJsonFile(authPath, auth)

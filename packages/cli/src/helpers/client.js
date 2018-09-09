@@ -10,7 +10,7 @@ export default async function createClient (args, requireAuth, requireSite = fal
   const projectName = await getProjectName(args)
 
   const client = taskfire(auth.token, {
-    projectId: projectName,
+    project: projectName,
     url: process.env.NODE_ENV === 'development' ? 'http://localhost:4000' : 'https://api.taskfire.io',
     // debug: true,
   })
@@ -34,12 +34,12 @@ export default async function createClient (args, requireAuth, requireSite = fal
     const selectedProject = projects[selectedIndex.id]
 
     // Set it as the default for the future
-    await setBasicConfig(args, 'defaultProject', selectedProject.id)
+    await setBasicConfig(args, 'defaultProject', selectedProject.name)
 
     output(`Setting ${selectedProject.name} as default config`)
 
     // Update the client with the selected projectId
-    client.options.projectId = selectedProject.id
+    client.options.projectId = selectedProject.name
   }
 
   return client

@@ -7,6 +7,8 @@ import login from './cmds/login'
 import runs from './cmds/runs'
 import deploy from './cmds/deploy'
 import config from './cmds/config'
+import init from './cmds/init'
+import output from './helpers/output'
 
 yargs
   .usage('Usage: taskfire <command> [options]')
@@ -17,6 +19,7 @@ yargs
   .command(deploy)
   .command(config)
   .command(login)
+  .command(init)
   .option('token', {
     alias: 't',
     describe: 'Authentication token',
@@ -25,15 +28,20 @@ yargs
     alias: 'p',
     describe: 'Project to target',
   })
-  .fail((msg, err) => {
-    console.log('')
-    console.log(msg || err.message)
-    if (process.env.NODE_ENV !== 'production') {
-      throw err
-    }
-    // process.exit(1)
+  .option('silent', {
+    alias: 's',
+    describe: 'Silent mode (no stdout)',
   })
-  .demandCommand()
+  .strict()
+  .demandCommand(1)
+  .fail((msg, err) => {
+    output.space()
+    if (msg || (err && err.message)) {
+      output.accent(msg || (err && err.message))
+      output.space()
+    }
+    yargs.showHelp()
+  })
   .recommendCommands()
   .help('h')
   .parse()
