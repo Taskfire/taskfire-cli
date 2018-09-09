@@ -68,6 +68,9 @@ export async function handler (args) {
   })
 
   output.success('Deployment complete', args)
+
+  output('View your deployment at:')
+  output.accent('')
 }
 
 export default {
