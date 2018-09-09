@@ -1,0 +1,11 @@
+{
+  "steps": [
+    {
+    	"command": ["ruby", "./lib/hello.rb"],
+      "build": {
+      	"context": "./",
+      	"builder": "ruby"
+      }
+    }
+  ]
+}

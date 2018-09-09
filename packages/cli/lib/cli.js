@@ -1,0 +1,62 @@
+#!/usr/bin/env node
+'use strict';
+
+var _yargs = require('yargs');
+
+var _yargs2 = _interopRequireDefault(_yargs);
+
+var _flows = require('./cmds/flows');
+
+var _flows2 = _interopRequireDefault(_flows);
+
+var _projects = require('./cmds/projects');
+
+var _projects2 = _interopRequireDefault(_projects);
+
+var _login = require('./cmds/login');
+
+var _login2 = _interopRequireDefault(_login);
+
+var _runs = require('./cmds/runs');
+
+var _runs2 = _interopRequireDefault(_runs);
+
+var _images = require('./cmds/images');
+
+var _images2 = _interopRequireDefault(_images);
+
+var _deploy = require('./cmds/deploy');
+
+var _deploy2 = _interopRequireDefault(_deploy);
+
+var _config = require('./cmds/config');
+
+var _config2 = _interopRequireDefault(_config);
+
+var _init = require('./cmds/init');
+
+var _init2 = _interopRequireDefault(_init);
+
+var _output = require('./helpers/output');
+
+var _output2 = _interopRequireDefault(_output);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+_yargs2.default.usage('Usage: taskfire <command> [options]').scriptName('taskfire').command(_flows2.default).command(_projects2.default).command(_runs2.default).command(_deploy2.default).command(_images2.default).command(_config2.default).command(_login2.default).command(_init2.default).option('token', {
+  alias: 't',
+  describe: 'Authentication token'
+}).option('project', {
+  alias: 'p',
+  describe: 'Project to target'
+}).option('silent', {
+  alias: 's',
+  describe: 'Silent mode (no stdout)'
+}).strict().demandCommand(1).fail((msg, err) => {
+  _output2.default.space();
+  if (msg || err && err.message) {
+    _output2.default.accent(msg || err && err.message);
+    _output2.default.space();
+  }
+  _yargs2.default.showHelp();
+}).recommendCommands().help('h').parse();
