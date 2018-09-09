@@ -6,6 +6,7 @@ import matchSorter from 'match-sorter'
 import getDeploymentFlowName from '../helpers/deploy/get-name'
 import output from '../helpers/output'
 import { getCwd } from '../helpers/args'
+import { getProjectName } from '../helpers/config'
 
 inquirer.registerPrompt('autocomplete', autoCompletePrompt)
 
@@ -29,6 +30,15 @@ async function handler (args) {
     })
   }
 
+  if (!args.project) {
+    prompts.push({
+      type: 'input',
+      name: 'project',
+      message: 'project',
+      default: await getProjectName(args),
+    })
+  }
+
   if (!args.template) {
     prompts.push({
       type: 'autocomplete',
@@ -45,6 +55,7 @@ async function handler (args) {
 
   const name = args.name || answers.name
   const template = args.template || answers.template
+  const project = args.project || args.p || answers.project
 
   if (!exampleList.includes(template)) {
     output.error('Invalid flow template specified')
@@ -67,6 +78,12 @@ async function handler (args) {
   output.accent(`Copying template to ${dest}`, args)
 
   await fs.copy(path.resolve(__dirname, `../../templates/${template}`), dest)
+  await fs.outputJson(path.resolve(dest, '.taskfirerc'), {
+    default: {
+      project,
+      flow: name,
+    },
+  })
 
   if (name) output.success(`Flow ${name} created`, args)
   else output.success('Flow created')
