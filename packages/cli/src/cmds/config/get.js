@@ -3,9 +3,9 @@ import output from '../../helpers/output'
 
 export async function handler (args) {
   const value = await getBasicConfig(args, args.key)
-  output.space()
-  output.accent(value)
-  output.space()
+  output.space(args)
+  output.accent(value, args)
+  output.space(args)
 }
 
 export default {

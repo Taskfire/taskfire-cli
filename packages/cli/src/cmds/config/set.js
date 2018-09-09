@@ -4,9 +4,9 @@ import output from '../../helpers/output'
 export async function handler (args) {
   await setBasicConfig(args, args.key, args.value)
 
-  output.space()
-  output.accent(`Set ${args.key} to ${args.value}`)
-  output.space()
+  output.space(args)
+  output.accent(`Set ${args.key} to ${args.value}`, args)
+  output.space(args)
 }
 
 export default {

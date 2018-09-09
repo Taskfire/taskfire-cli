@@ -16,7 +16,7 @@ const columns = [{
 export async function handler (args) {
   const client = await createClient(args)
   const list = await client.projects.list()
-  output.block(createTable(columns, list))
+  output.block(createTable(columns, list), args)
 }
 
 export default {

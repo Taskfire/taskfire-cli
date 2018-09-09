@@ -45,7 +45,7 @@ async function handler (args) {
     await addAuthConfig(args, username, login.token)
   }
 
-  output(chalk.green('Successful login'))
+  output(chalk.green('Successful login'), args)
 }
 
 export default {

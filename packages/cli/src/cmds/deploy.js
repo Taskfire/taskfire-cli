@@ -21,7 +21,7 @@ export async function handler (args) {
 
   // Upload each file and wait for them to complete
   const promises = files.map(async (file) => {
-    output(`Uploading ${file}`)
+    output(`Uploading ${file}`, args)
     const stream = fs.createReadStream(file)
     return client.request({
       url: '/files',
@@ -36,12 +36,12 @@ export async function handler (args) {
 
   await Promise.all(promises)
 
-  output.accent('Upload success')
-  output.space()
+  output.accent('Upload success', args)
+  output.space(args)
 
   // Upload the deployment data
   const name = await getDeploymentFlowName(args)
-  output.accent(`Deploying flow: ${name}`)
+  output.accent(`Deploying flow: ${name}`, args)
 
   // Send deploy request
   const deployFilesPromises = files.map(async (file) => {
@@ -67,7 +67,7 @@ export async function handler (args) {
     },
   })
 
-  output.success('Deployment complete')
+  output.success('Deployment complete', args)
 }
 
 export default {

@@ -16,7 +16,7 @@ const columns = [{
 export async function handler (args) {
   const client = await createClient(args)
   const tasks = await client.flows.list()
-  output.block(createTable(columns, tasks))
+  output.block(createTable(columns, tasks), args)
 }
 
 export default {

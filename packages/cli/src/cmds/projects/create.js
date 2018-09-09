@@ -15,7 +15,7 @@ export async function handler (args) {
     await setBasicConfig(args, 'defaultProject', project.id)
   }
 
-  output.success(`Created project: ${project.name}`)
+  output.success(`Created project: ${project.name}`, args)
   // output.block(createTable(columns, tasks))
 }
 
