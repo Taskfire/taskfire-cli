@@ -118,8 +118,6 @@ async function handler(args) {
     // realpath: true,
   });
 
-  console.log(filePaths);
-
   filePaths.forEach(filePath => {
     const buff = _fsExtra2.default.readFileSync(_path2.default.resolve(pkgDir, filePath), 'utf-8');
     _fsExtra2.default.outputFileSync(_path2.default.resolve(dest, filePath), buff);

@@ -39,7 +39,7 @@ export default async function createClient (args, requireAuth, requireSite = fal
     output(`Setting ${selectedProject.name} as default config`)
 
     // Update the client with the selected projectId
-    client.options.projectId = selectedProject.name
+    client.options.project = selectedProject.name
   }
 
   return client
