@@ -52,7 +52,7 @@ export async function addAuthConfig (args, username, token) {
   }
   auth.defaultAuth = username
 
-  await setBasicConfig('defaultProject', null)
+  await setBasicConfig(args, 'defaultProject', null)
 
   // Save the file
   return writeJsonFile(authPath, auth)

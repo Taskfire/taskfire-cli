@@ -25,6 +25,8 @@ export default async function createClient (args, requireAuth, requireSite = fal
       output.error('You must create a project before deploying your code')
     }
 
+    output('Select a project:')
+
     // Ask the user to select a project
     const selectedIndex = await cliSelect({
       values: projects.map(({ name }) => name),

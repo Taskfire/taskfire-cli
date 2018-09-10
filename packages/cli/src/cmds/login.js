@@ -42,7 +42,7 @@ async function handler (args) {
   })
 
   if (login) {
-    await addAuthConfig(args, username, login.token)
+    await addAuthConfig(args, username, login.token, login.username)
   }
 
   output(chalk.green('Successful login'), args)

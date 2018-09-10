@@ -19,7 +19,8 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 const NO_TOKEN_MSG = `
   ${_chalk2.default.red('No authentication token')}
 
-  Use ${_chalk2.default.cyanBright('$ taskfire login')}
+  Use ${_chalk2.default.cyanBright('$ taskfire login')} to login
+  Or ${_chalk2.default.cyanBright('$ taskfire signup')} to create a new account
 `;
 
 exports.default = async function getAuth(args, requireAuth = true) {

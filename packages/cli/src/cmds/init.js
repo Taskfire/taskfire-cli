@@ -6,7 +6,7 @@ import matchSorter from 'match-sorter'
 import { glob } from 'glob-gitignore'
 import getDeploymentFlowName from '../helpers/deploy/get-name'
 import output from '../helpers/output'
-import { getCwd, getProjectName } from '../helpers/args'
+import { getCwd } from '../helpers/args'
 
 // const GIT_URL = 'https://github.com/Taskfire/taskfire-cli/tree/v0.2.0/packages/cli/templates'
 
@@ -32,14 +32,14 @@ async function handler (args) {
     })
   }
 
-  if (!args.project) {
-    prompts.push({
-      type: 'input',
-      name: 'project',
-      message: 'project',
-      default: await getProjectName(args),
-    })
-  }
+  // if (!args.project) {
+  //   prompts.push({
+  //     type: 'input',
+  //     name: 'project',
+  //     message: 'project',
+  //     default: await getProjectName(args),
+  //   })
+  // }
 
   if (!args.template) {
     prompts.push({
@@ -57,7 +57,7 @@ async function handler (args) {
 
   const name = args.name || answers.name
   const template = args.template || answers.template
-  const project = args.project || args.p || answers.project
+  const project = args.project || args.p // || answers.p
 
   if (!exampleList.includes(template)) {
     output.error('Invalid flow template specified')

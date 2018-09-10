@@ -62,14 +62,14 @@ async function handler(args) {
     });
   }
 
-  if (!args.project) {
-    prompts.push({
-      type: 'input',
-      name: 'project',
-      message: 'project',
-      default: await (0, _args.getProjectName)(args)
-    });
-  }
+  // if (!args.project) {
+  //   prompts.push({
+  //     type: 'input',
+  //     name: 'project',
+  //     message: 'project',
+  //     default: await getProjectName(args),
+  //   })
+  // }
 
   if (!args.template) {
     prompts.push({
@@ -87,7 +87,7 @@ async function handler(args) {
 
   const name = args.name || answers.name;
   const template = args.template || answers.template;
-  const project = args.project || args.p || answers.project;
+  const project = args.project || args.p; // || answers.p
 
   if (!exampleList.includes(template)) {
     _output2.default.error('Invalid flow template specified');

@@ -63,7 +63,7 @@ async function handler(args) {
   });
 
   if (login) {
-    await (0, _config.addAuthConfig)(args, username, login.token);
+    await (0, _config.addAuthConfig)(args, username, login.token, login.username);
   }
 
   (0, _output2.default)(_chalk2.default.green('Successful login'), args);

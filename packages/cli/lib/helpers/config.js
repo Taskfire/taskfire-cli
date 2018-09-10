@@ -77,7 +77,7 @@ async function addAuthConfig(args, username, token) {
   };
   auth.defaultAuth = username;
 
-  await setBasicConfig('defaultProject', null);
+  await setBasicConfig(args, 'defaultProject', null);
 
   // Save the file
   return (0, _writeJsonFile2.default)(authPath, auth);

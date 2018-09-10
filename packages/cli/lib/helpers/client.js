@@ -46,6 +46,8 @@ exports.default = async function createClient(args, requireAuth, requireSite = f
       _output2.default.error('You must create a project before deploying your code');
     }
 
+    (0, _output2.default)('Select a project:');
+
     // Ask the user to select a project
     const selectedIndex = await (0, _cliSelect2.default)({
       values: projects.map(({ name }) => name)
