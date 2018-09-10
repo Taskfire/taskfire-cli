@@ -25,6 +25,14 @@ var _runs = require('./cmds/runs');
 
 var _runs2 = _interopRequireDefault(_runs);
 
+var _run = require('./cmds/run');
+
+var _run2 = _interopRequireDefault(_run);
+
+var _logs = require('./cmds/logs');
+
+var _logs2 = _interopRequireDefault(_logs);
+
 var _images = require('./cmds/images');
 
 var _images2 = _interopRequireDefault(_images);
@@ -51,7 +59,7 @@ var _output2 = _interopRequireDefault(_output);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-_yargs2.default.usage('Usage: taskfire <command> [options]').scriptName('taskfire').command(_flows2.default).command(_projects2.default).command(_runs2.default).command(_deploy2.default).command(_images2.default).command(_variables2.default).command(_config2.default).command(_login2.default).command(_signup2.default).command(_init2.default).option('token', {
+_yargs2.default.usage('Usage: taskfire <command> [options]').scriptName('taskfire').command(_flows2.default).command(_projects2.default).command(_runs2.default).command(_run2.default).command(_logs2.default).command(_deploy2.default).command(_images2.default).command(_variables2.default).command(_config2.default).command(_login2.default).command(_signup2.default).command(_init2.default).option('token', {
   alias: 't',
   describe: 'Authentication token'
 }).option('project', {

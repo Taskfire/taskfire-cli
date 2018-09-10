@@ -6,6 +6,8 @@ import projects from './cmds/projects'
 import login from './cmds/login'
 import signup from './cmds/signup'
 import runs from './cmds/runs'
+import run from './cmds/run'
+import logs from './cmds/logs'
 import images from './cmds/images'
 import variables from './cmds/variables'
 import deploy from './cmds/deploy'
@@ -19,6 +21,8 @@ yargs
   .command(flows)
   .command(projects)
   .command(runs)
+  .command(run)
+  .command(logs)
   .command(deploy)
   .command(images)
   .command(variables)
