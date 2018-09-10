@@ -8,7 +8,7 @@ async function handler (args) {
     url: `/runs/${args.runId}/logs`,
     method: 'GET',
   })
-  output(logs.join(''))
+  output(logs.join('\n'))
 }
 
 export default {
