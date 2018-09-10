@@ -22,11 +22,14 @@ var _output2 = _interopRequireDefault(_output);
 
 var _config = require('./config');
 
+var _args = require('./args');
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+// import taskfire from '../../../taskfire-nodejs/lib/index'
 exports.default = async function createClient(args, requireAuth, requireSite = false) {
   const auth = await (0, _auth2.default)(args, requireAuth, requireSite);
-  const projectName = await (0, _config.getProjectName)(args);
+  const projectName = await (0, _args.getProjectName)(args);
 
   const client = (0, _taskfire2.default)(auth.token, {
     project: projectName,
@@ -62,4 +65,4 @@ exports.default = async function createClient(args, requireAuth, requireSite = f
   }
 
   return client;
-}; // import taskfire from '../../../taskfire-nodejs/lib/index'
+};

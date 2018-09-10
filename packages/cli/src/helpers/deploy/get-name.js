@@ -10,6 +10,7 @@ const packageFiles = [
   'taskfire.json',
   'taskfire.yml',
   'taskfire.yaml',
+  '.taskfirerc',
   'package.json', // Nodejs
   'app.json', // Ruby
   'composer.json', // PHP
@@ -49,12 +50,15 @@ function getPackageName (args) {
     const filePath = path.resolve(cwd, fileName)
 
     let file
-    if (ext === 'json') file = fs.readJsonSync(filePath)
-    else if (ext === 'yml' || ext === 'yaml') {
+    if (ext === 'json') file = fs.readJsonSync(filePath, { throw: false })
+    else if (fileName === '.taskfirerc') {
+      file = fs.readJsonSync(filePath, { throw: false })
+      file = file && { name: file.default.flow }
+    } else if (ext === 'yml' || ext === 'yaml') {
       file = yml.safeLoad(fs.readFileSync(filePath, 'utf8'))
     }
 
-    if (file.name) return file.name
+    if (file && file.name) return file.name
 
     return undefined
   })

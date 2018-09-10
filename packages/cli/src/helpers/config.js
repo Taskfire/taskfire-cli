@@ -77,7 +77,3 @@ export async function getBasicConfig (args, key) {
   const json = await fs.readJson(configPath)
   return get(json, key)
 }
-
-export async function getProjectName (args) {
-  return args.p || args.project || getBasicConfig(args, 'defaultProject')
-}

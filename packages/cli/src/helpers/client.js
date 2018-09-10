@@ -3,7 +3,8 @@ import cliSelect from 'cli-select'
 import taskfire from 'taskfire'
 import getAuth from './auth'
 import output from './output'
-import { setBasicConfig, getProjectName } from './config'
+import { setBasicConfig } from './config'
+import { getProjectName } from './args'
 
 export default async function createClient (args, requireAuth, requireSite = false) {
   const auth = await getAuth(args, requireAuth, requireSite)

@@ -31,7 +31,7 @@ var _lang2 = _interopRequireDefault(_lang);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-const packageFiles = ['taskfire.json', 'taskfire.yml', 'taskfire.yaml', 'package.json', // Nodejs
+const packageFiles = ['taskfire.json', 'taskfire.yml', 'taskfire.yaml', '.taskfirerc', 'package.json', // Nodejs
 'app.json', // Ruby
 'composer.json', // PHP
 'app.yml', 'app.yaml'];
@@ -67,11 +67,16 @@ function getPackageName(args) {
     const filePath = _path2.default.resolve(cwd, fileName);
 
     let file;
-    if (ext === 'json') file = _fsExtra2.default.readJsonSync(filePath);else if (ext === 'yml' || ext === 'yaml') {
+    if (ext === 'json') file = _fsExtra2.default.readJsonSync(filePath, { throw: false });else if (fileName === '.taskfirerc') {
+      file = _fsExtra2.default.readJsonSync(filePath, { throw: false });
+      file = file && { name: file.default.flow };
+    } else if (ext === 'yml' || ext === 'yaml') {
       file = _jsYaml2.default.safeLoad(_fsExtra2.default.readFileSync(filePath, 'utf8'));
     }
 
-    if (file.name) return file.name;
+    console.log(file);
+
+    if (file && file.name) return file.name;
 
     return undefined;
   });

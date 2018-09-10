@@ -6,8 +6,7 @@ import matchSorter from 'match-sorter'
 import { glob } from 'glob-gitignore'
 import getDeploymentFlowName from '../helpers/deploy/get-name'
 import output from '../helpers/output'
-import { getCwd } from '../helpers/args'
-import { getProjectName } from '../helpers/config'
+import { getCwd, getProjectName } from '../helpers/args'
 
 // const GIT_URL = 'https://github.com/Taskfire/taskfire-cli/tree/v0.2.0/packages/cli/templates'
 

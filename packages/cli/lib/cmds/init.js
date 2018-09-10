@@ -36,8 +36,6 @@ var _output2 = _interopRequireDefault(_output);
 
 var _args = require('../helpers/args');
 
-var _config = require('../helpers/config');
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 // const GIT_URL = 'https://github.com/Taskfire/taskfire-cli/tree/v0.2.0/packages/cli/templates'
@@ -69,7 +67,7 @@ async function handler(args) {
       type: 'input',
       name: 'project',
       message: 'project',
-      default: await (0, _config.getProjectName)(args)
+      default: await (0, _args.getProjectName)(args)
     });
   }
 

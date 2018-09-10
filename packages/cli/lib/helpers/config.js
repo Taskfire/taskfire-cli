@@ -8,7 +8,6 @@ exports.getAuthConfig = getAuthConfig;
 exports.addAuthConfig = addAuthConfig;
 exports.setBasicConfig = setBasicConfig;
 exports.getBasicConfig = getBasicConfig;
-exports.getProjectName = getProjectName;
 
 var _os = require('os');
 
@@ -102,8 +101,4 @@ async function getBasicConfig(args, key) {
   if (!_fsExtra2.default.existsSync(configPath)) return null;
   const json = await _fsExtra2.default.readJson(configPath);
   return (0, _get2.default)(json, key);
-}
-
-async function getProjectName(args) {
-  return args.p || args.project || getBasicConfig(args, 'defaultProject');
 }
