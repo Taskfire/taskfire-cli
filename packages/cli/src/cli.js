@@ -4,6 +4,7 @@ import yargs from 'yargs'
 import flows from './cmds/flows'
 import projects from './cmds/projects'
 import login from './cmds/login'
+import signup from './cmds/signup'
 import runs from './cmds/runs'
 import images from './cmds/images'
 import variables from './cmds/variables'
@@ -23,6 +24,7 @@ yargs
   .command(variables)
   .command(config)
   .command(login)
+  .command(signup)
   .command(init)
   .option('token', {
     alias: 't',

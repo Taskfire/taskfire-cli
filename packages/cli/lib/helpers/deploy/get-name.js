@@ -74,8 +74,6 @@ function getPackageName(args) {
       file = _jsYaml2.default.safeLoad(_fsExtra2.default.readFileSync(filePath, 'utf8'));
     }
 
-    console.log(file);
-
     if (file && file.name) return file.name;
 
     return undefined;

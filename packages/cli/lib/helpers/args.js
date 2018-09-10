@@ -18,7 +18,7 @@ var _config = require('./config');
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 const getCwd = exports.getCwd = args => {
-  return _path2.default.resolve(process.cwd(), args.dir);
+  return _path2.default.resolve(process.cwd(), args.dir || '');
 };
 
 const getProjectName = exports.getProjectName = async args => {

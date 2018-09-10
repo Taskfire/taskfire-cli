@@ -3,7 +3,7 @@ import fs from 'fs-extra'
 import { getBasicConfig } from './config'
 
 export const getCwd = (args) => {
-  return path.resolve(process.cwd(), args.dir)
+  return path.resolve(process.cwd(), args.dir || '')
 }
 
 export const getProjectName = async (args) => {

@@ -5,7 +5,8 @@ import { getAuthConfig } from './config'
 const NO_TOKEN_MSG = `
   ${chalk.red('No authentication token')}
 
-  Use ${chalk.cyanBright('$ taskfire login')}
+  Use ${chalk.cyanBright('$ taskfire login')} to login
+  Or ${chalk.cyanBright('$ taskfire signup')} to create a new account
 `
 
 export default async function getAuth (args, requireAuth = true) {
