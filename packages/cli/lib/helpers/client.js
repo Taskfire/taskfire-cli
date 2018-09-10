@@ -58,7 +58,7 @@ exports.default = async function createClient(args, requireAuth, requireSite = f
     (0, _output2.default)(`Setting ${selectedProject.name} as default config`);
 
     // Update the client with the selected projectId
-    client.options.projectId = selectedProject.name;
+    client.options.project = selectedProject.name;
   }
 
   return client;

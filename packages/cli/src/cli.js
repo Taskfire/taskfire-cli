@@ -6,6 +6,7 @@ import projects from './cmds/projects'
 import login from './cmds/login'
 import runs from './cmds/runs'
 import images from './cmds/images'
+import variables from './cmds/variables'
 import deploy from './cmds/deploy'
 import config from './cmds/config'
 import init from './cmds/init'
@@ -19,6 +20,7 @@ yargs
   .command(runs)
   .command(deploy)
   .command(images)
+  .command(variables)
   .command(config)
   .command(login)
   .command(init)
@@ -37,6 +39,7 @@ yargs
   .strict()
   .demandCommand(1)
   .fail((msg, err) => {
+    console.log(err)
     output.space()
     if (msg || (err && err.message)) {
       output.accent(msg || (err && err.message))
