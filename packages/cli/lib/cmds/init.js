@@ -24,6 +24,8 @@ var _matchSorter = require('match-sorter');
 
 var _matchSorter2 = _interopRequireDefault(_matchSorter);
 
+var _globGitignore = require('glob-gitignore');
+
 var _getName = require('../helpers/deploy/get-name');
 
 var _getName2 = _interopRequireDefault(_getName);
@@ -37,6 +39,8 @@ var _args = require('../helpers/args');
 var _config = require('../helpers/config');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+// const GIT_URL = 'https://github.com/Taskfire/taskfire-cli/tree/v0.2.0/packages/cli/templates'
 
 _inquirer2.default.registerPrompt('autocomplete', _inquirerAutocompletePrompt2.default);
 
@@ -107,7 +111,21 @@ async function handler(args) {
 
   _output2.default.accent(`Copying template to ${dest}`, args);
 
-  await _fsExtra2.default.copy(_path2.default.resolve(__dirname, `../../templates/${template}`), dest);
+  const pkgDir = _path2.default.resolve(__dirname, `../../templates/${template}`);
+  const filePaths = await (0, _globGitignore.glob)(['**'], {
+    cwd: pkgDir,
+    nodir: true
+    // realpath: true,
+  });
+
+  console.log(filePaths);
+
+  filePaths.forEach(filePath => {
+    const buff = _fsExtra2.default.readFileSync(_path2.default.resolve(pkgDir, filePath), 'utf-8');
+    _fsExtra2.default.outputFileSync(_path2.default.resolve(dest, filePath), buff);
+  });
+
+  // await fs.copy(path.resolve(__dirname, `../../templates/${template}`), dest)
   await _fsExtra2.default.outputJson(_path2.default.resolve(dest, '.taskfirerc'), {
     default: {
       project,

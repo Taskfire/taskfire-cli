@@ -3,10 +3,13 @@ import path from 'path'
 import inquirer from 'inquirer'
 import autoCompletePrompt from 'inquirer-autocomplete-prompt'
 import matchSorter from 'match-sorter'
+import { glob } from 'glob-gitignore'
 import getDeploymentFlowName from '../helpers/deploy/get-name'
 import output from '../helpers/output'
 import { getCwd } from '../helpers/args'
 import { getProjectName } from '../helpers/config'
+
+// const GIT_URL = 'https://github.com/Taskfire/taskfire-cli/tree/v0.2.0/packages/cli/templates'
 
 inquirer.registerPrompt('autocomplete', autoCompletePrompt)
 
@@ -77,7 +80,19 @@ async function handler (args) {
 
   output.accent(`Copying template to ${dest}`, args)
 
-  await fs.copy(path.resolve(__dirname, `../../templates/${template}`), dest)
+  const pkgDir = path.resolve(__dirname, `../../templates/${template}`)
+  const filePaths = await glob(['**'], {
+    cwd: pkgDir,
+    nodir: true,
+    // realpath: true,
+  })
+
+  filePaths.forEach((filePath) => {
+    const buff = fs.readFileSync(path.resolve(pkgDir, filePath), 'utf-8')
+    fs.outputFileSync(path.resolve(dest, filePath), buff)
+  })
+
+  // await fs.copy(path.resolve(__dirname, `../../templates/${template}`), dest)
   await fs.outputJson(path.resolve(dest, '.taskfirerc'), {
     default: {
       project,

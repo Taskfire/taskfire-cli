@@ -1,3 +1,0 @@
-steps:
-    - name: custom-name-step-1
-      build: ./step1

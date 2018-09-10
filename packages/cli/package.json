@@ -18,7 +18,7 @@
     "build": "babel src --ignore .spec.js -d lib && chmod +x lib/index.js",
     "cmd": "yarn build && NODE_ENV=development node ./lib/index.js",
     "bundle": "NODE_ENV=production rm -rf packed && yarn build && pkg lib/index.js -c package.json -o packed/taskfire --options no-warnings && yarn gzip",
-    "prepublish": "yarn run build",
+    "prepublish": "yarn run build && yarn bundle",
     "build2": "webpack --context download --config download/webpack.config.js"
   },
   "bin": {
@@ -27,6 +27,9 @@
   "pkg": {
     "scripts": [
       "lib/**/*.js"
+    ],
+    "assets": [
+    	"templates/**/*"
     ],
     "targets": [
       "node9-alpine-x64",
