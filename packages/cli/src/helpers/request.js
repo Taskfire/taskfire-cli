@@ -1,6 +1,5 @@
-// import taskfire from '../../../taskfire-nodejs/lib/index'
+import request from 'request-promise-native'
 import cliSelect from 'cli-select'
-import taskfire from 'taskfire'
 import getAuth from './auth'
 import output from './output'
 import { setBasicConfig } from './config'
@@ -10,20 +9,26 @@ const BASE_URL = process.env.NODE_ENV === 'development'
   ? 'http://localhost:4000'
   : 'https://api.taskfire.io/v1'
 
-export default async function createClient (args, requireAuth, requireSite = false) {
+export default async function makeRequest (args, req, requireAuth, requireSite = false) {
   const auth = await getAuth(args, requireAuth, requireSite)
   const projectName = await getProjectName(args)
 
-  const client = taskfire(auth.token, {
-    project: projectName,
-    url: BASE_URL,
-    debug: true,
-  })
+  const reqObj = {
+    ...req,
+    query: req.query || {},
+    baseUrl: BASE_URL,
+    auth: auth && {
+      bearer: auth.token,
+    },
+  }
 
   // If we need a project/site then we should
   // ask the user for it (as no default is present)
   if (requireSite && !projectName) {
-    const projects = await client.projects.list()
+    const projects = await makeRequest(args, {
+      method: 'GET',
+      url: '/projects',
+    }, false, false)
 
     if (!projects.length) {
       output.error('You must create a project before deploying your code')
@@ -46,8 +51,8 @@ export default async function createClient (args, requireAuth, requireSite = fal
     output(`Setting ${selectedProject.name} as default config`)
 
     // Update the client with the selected projectId
-    client.options.project = selectedProject.name
+    reqObj.query.project = selectedProject.name
   }
 
-  return client
+  return request(reqObj)
 }

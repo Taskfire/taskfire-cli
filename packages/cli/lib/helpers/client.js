@@ -27,14 +27,16 @@ var _args = require('./args');
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 // import taskfire from '../../../taskfire-nodejs/lib/index'
+const BASE_URL = process.env.NODE_ENV === 'development' ? 'http://localhost:4000' : 'https://api.taskfire.io/v1';
+
 exports.default = async function createClient(args, requireAuth, requireSite = false) {
   const auth = await (0, _auth2.default)(args, requireAuth, requireSite);
   const projectName = await (0, _args.getProjectName)(args);
 
   const client = (0, _taskfire2.default)(auth.token, {
     project: projectName,
-    url: process.env.NODE_ENV === 'development' ? 'http://localhost:4000' : 'https://api.taskfire.io'
-    // debug: true,
+    url: BASE_URL,
+    debug: true
   });
 
   // If we need a project/site then we should

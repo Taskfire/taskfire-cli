@@ -19,9 +19,10 @@ export async function checkOutput (f, argv) {
   console.warn = (msg) => { warnings.push(msg) }
 
   return new Promise((resolve, reject) => {
-    process.exit = () => {
-      exit = true
+    process.exit = (exitCode) => {
+      exit = exitCode
       resolve()
+      // _exit.call(process, exitCode)
     }
 
     process.emit = function emit (ev, value) {
@@ -30,8 +31,6 @@ export async function checkOutput (f, argv) {
         reject(value)
         return true
       }
-
-      console.log(ev, value)
 
       // eslint-disable-next-line
       return _emit.apply(this, arguments)

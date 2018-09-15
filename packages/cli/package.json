@@ -8,7 +8,7 @@
   "private": true,
   "main": "lib/index.js",
   "scripts": {
-    "test": "jest ./tests",
+    "test": "jest ./tests --runInBand",
     "coveralls": "cat ./coverage/lcov.info | coveralls",
     "nyc:coverage": "NODE_ENV=test nyc --reporter=html jest ./src",
     "test:watch": "jest --watchAll",
@@ -80,7 +80,8 @@
     ],
     "testEnvironment": "node",
     "testMatch": [
-      "<rootDir>/tests/**/?(*.)(spec|test).js"
+      "<rootDir>/tests/**/?(*.)(spec|test).js",
+      "<rootDir>/src/**/__tests__/**/*.js"
     ],
     "watchPathIgnorePatterns": [
       "<rootDir>/tests/fixtures"

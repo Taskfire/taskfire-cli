@@ -1,5 +1,5 @@
 // import yargs from 'yargs'
-import createClient from '../../helpers/client'
+import request from '../../helpers/request'
 import createTable from '../../helpers/table'
 import output from '../../helpers/output'
 
@@ -14,11 +14,10 @@ const columns = [{
 }]
 
 export async function handler (args) {
-  console.log('hllo')
-  const client = await createClient(args)
-  console.log('hllo 2')
-  const list = await client.projects.list()
-  console.log('hllo 3')
+  const list = await request(args, {
+    method: 'GET',
+    url: '/projects',
+  })
   output.block(createTable(columns, list), args)
 }
 

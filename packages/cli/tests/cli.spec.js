@@ -6,7 +6,7 @@ describe('cli.spec', () => {
     const { exit, errors } = await checkOutput(() =>
       cli.parse(['-h']))
 
-    expect(exit).toBe(true)
+    expect(exit).toBe(0)
     expect(errors).toEqual([])
   })
 
