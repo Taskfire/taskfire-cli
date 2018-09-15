@@ -5,23 +5,27 @@ import ignore from 'ignore'
 import ignoreByDefault from 'ignore-by-default'
 import { getCwd } from '../args'
 
-// const ignoreFiles = ['.taskfireignore', '.dockerignore', '.gitignore']
+const ignoreFiles = ['.dockerignore', '.gitignore']
 
 export async function getUploadPaths (args) {
   const cwd = getCwd(args)
 
-  // Find a .gitignore
-  const gitIgnorePath = await findUp('.gitignore', {
-    cwd,
+  // Find a .gitignore/.dockerignore
+  const ignoresPromises = ignoreFiles.map(async (name) => {
+    const ignorePath = await findUp(name, {
+      cwd,
+    })
+    return (ignorePath && fs.readFileSync(ignorePath).toString()) || ''
   })
 
-  const gitIgnore = gitIgnorePath && fs.readFileSync(gitIgnorePath).toString()
+  const ignores = await Promise.all(ignoresPromises)
 
   return glob(['**'], {
     cwd,
     nodir: true,
     realpath: true,
     ignore: ignore()
-      .add(gitIgnore).add(ignoreByDefault.directories),
+      .add(ignores.join('\n'))
+      .add(ignoreByDefault.directories),
   })
 }

@@ -5,6 +5,7 @@ import yml from 'js-yaml'
 import { forEach } from '../util'
 import { getCwd } from '../args'
 import getLanguage from '../lang'
+import output from '../output'
 
 const packageFiles = [
   'taskfire.json',
@@ -27,9 +28,15 @@ export default function getDeploymentFlowName (args) {
   const packageName = getPackageName(args)
   if (packageName) return packageName
 
-  // Otherwise use git name (if git repo)
+  // Otherwise use git name (if git repo and remote-url)
   if (fs.existsSync(path.resolve(cwd, '.git'))) {
-    const gitName = repoName.sync()
+    let gitName
+    try {
+      gitName = repoName.sync(cwd)
+    } catch (e) {
+      output.info('No remote-url found in .git')
+    }
+
     if (gitName) return gitName
   }
 

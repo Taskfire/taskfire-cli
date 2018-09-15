@@ -1,0 +1,5 @@
+{
+  "default": {
+    "flow": "taskfire-rc-flow-name"
+  }
+}

@@ -14,8 +14,11 @@ const columns = [{
 }]
 
 export async function handler (args) {
+  console.log('hllo')
   const client = await createClient(args)
+  console.log('hllo 2')
   const list = await client.projects.list()
+  console.log('hllo 3')
   output.block(createTable(columns, list), args)
 }
 

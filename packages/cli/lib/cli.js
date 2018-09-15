@@ -1,6 +1,10 @@
 #!/usr/bin/env node
 'use strict';
 
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
 var _yargs = require('yargs');
 
 var _yargs2 = _interopRequireDefault(_yargs);
@@ -59,7 +63,7 @@ var _output2 = _interopRequireDefault(_output);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-_yargs2.default.usage('Usage: taskfire <command> [options]').scriptName('taskfire').command(_flows2.default).command(_projects2.default).command(_runs2.default).command(_run2.default).command(_logs2.default).command(_deploy2.default).command(_images2.default).command(_variables2.default).command(_config2.default).command(_login2.default).command(_signup2.default).command(_init2.default).option('token', {
+const cli = _yargs2.default.usage('Usage: taskfire <command> [options]').scriptName('taskfire').command(_flows2.default).command(_projects2.default).command(_runs2.default).command(_run2.default).command(_logs2.default).command(_deploy2.default).command(_images2.default).command(_variables2.default).command(_config2.default).command(_login2.default).command(_signup2.default).command(_init2.default).option('token', {
   alias: 't',
   describe: 'Authentication token'
 }).option('project', {
@@ -69,11 +73,15 @@ _yargs2.default.usage('Usage: taskfire <command> [options]').scriptName('taskfir
   alias: 's',
   describe: 'Silent mode (no stdout)'
 }).strict().demandCommand(1).fail((msg, err) => {
-  console.log(err);
+  // console.log(err)
   _output2.default.space();
   if (msg || err && err.message) {
     _output2.default.accent(msg || err && err.message);
     _output2.default.space();
   }
   _yargs2.default.showHelp();
-}).recommendCommands().help('h').parse();
+}).recommendCommands().help('h');
+// .help('help')
+// .parse()
+
+exports.default = cli;

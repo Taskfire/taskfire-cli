@@ -27,22 +27,25 @@ var _args = require('../args');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-// const ignoreFiles = ['.taskfireignore', '.dockerignore', '.gitignore']
+const ignoreFiles = ['.dockerignore', '.gitignore'];
 
 async function getUploadPaths(args) {
   const cwd = (0, _args.getCwd)(args);
 
-  // Find a .gitignore
-  const gitIgnorePath = await (0, _findUp2.default)('.gitignore', {
-    cwd
+  // Find a .gitignore/.dockerignore
+  const ignoresPromises = ignoreFiles.map(async name => {
+    const ignorePath = await (0, _findUp2.default)(name, {
+      cwd
+    });
+    return ignorePath && _fsExtra2.default.readFileSync(ignorePath).toString() || '';
   });
 
-  const gitIgnore = gitIgnorePath && _fsExtra2.default.readFileSync(gitIgnorePath).toString();
+  const ignores = await Promise.all(ignoresPromises);
 
   return (0, _globGitignore.glob)(['**'], {
     cwd,
     nodir: true,
     realpath: true,
-    ignore: (0, _ignore2.default)().add(gitIgnore).add(_ignoreByDefault2.default.directories)
+    ignore: (0, _ignore2.default)().add(ignores.join('\n')).add(_ignoreByDefault2.default.directories)
   });
 }

@@ -13,7 +13,7 @@ export default async function createClient (args, requireAuth, requireSite = fal
   const client = taskfire(auth.token, {
     project: projectName,
     url: process.env.NODE_ENV === 'development' ? 'http://localhost:4000' : 'https://api.taskfire.io',
-    // debug: true,
+    debug: true,
   })
 
   // If we need a project/site then we should

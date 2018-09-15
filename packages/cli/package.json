@@ -2,13 +2,13 @@
   "name": "taskfire-cli-builder",
   "version": "0.2.2",
   "description": "NodeJS Client for Taskbird",
-  "repository": "https://github.com/Taskbird/taskbird-cli",
+  "repository": "https://github.com/taskfire/taskfire-cli",
   "author": "Calum Moore",
   "license": "Apache-2.0",
   "private": true,
   "main": "lib/index.js",
   "scripts": {
-    "test": "jest ./src --coverage --runInBand",
+    "test": "jest ./tests",
     "coveralls": "cat ./coverage/lcov.info | coveralls",
     "nyc:coverage": "NODE_ENV=test nyc --reporter=html jest ./src",
     "test:watch": "jest --watchAll",
@@ -62,6 +62,7 @@
     "pad": "^2.2.1",
     "promise-callbacks": "^3.1.0",
     "prompt": "^1.0.0",
+    "request-promise-native": "^1.0.5",
     "sha.js": "^2.4.11",
     "taskfire": "0.2.0",
     "which-promise": "^1.0.0",
@@ -69,9 +70,20 @@
     "yargs": "^12.0.1"
   },
   "jest": {
+    "verbose": true,
     "restoreMocks": true,
     "setupFiles": [
       "./jest-setup"
+    ],
+    "collectCoverageFrom": [
+      "src/**/*.{js,jsx,mjs}"
+    ],
+    "testEnvironment": "node",
+    "testMatch": [
+      "<rootDir>/tests/**/?(*.)(spec|test).js"
+    ],
+    "watchPathIgnorePatterns": [
+      "<rootDir>/tests/fixtures"
     ]
   },
   "devDependencies": {
@@ -93,9 +105,11 @@
     "eslint-plugin-import": "^2.8.0",
     "eslint-plugin-jsx-a11y": "^6.0.2",
     "eslint-plugin-react": "^7.4.0",
+    "execa": "^1.0.0",
     "flow-bin": "^0.44.2",
     "jest": "^23.3.0",
     "lerna": "^3.2.1",
+    "nodegit": "^0.22.2",
     "nyc": "^12.0.2",
     "pkg": "4.3.0",
     "webpack": "^4.17.2",

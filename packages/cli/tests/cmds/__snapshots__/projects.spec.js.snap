@@ -1,0 +1,20 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`cmds/projects.spec projects help command matches snapshot 1`] = `
+Array [
+  "taskfire projects
+
+Manage projects
+
+Commands:
+  taskfire projects list           List projects
+  taskfire projects create [name]  Create a new project
+
+Options:
+  --version      Show version number                                   [boolean]
+  --token, -t    Authentication token
+  --project, -p  Project to target
+  --silent, -s   Silent mode (no stdout)
+  -h             Show help                                             [boolean]",
+]
+`;

@@ -1,0 +1,28 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`cli.spec client help command matches snapshot 1`] = `
+Array [
+  "Usage: taskfire <command> [options]
+
+Commands:
+  taskfire flows         Manage flows
+  taskfire projects      Manage projects
+  taskfire runs          Manage runs
+  taskfire run <flowId>  Run a flow
+  taskfire logs <runId>  Logs for a specific run
+  taskfire deploy [dir]  Deploy your flow
+  taskfire images        Manage images
+  taskfire variables     Manage variables (and secrets)
+  taskfire config        Configure CLI
+  taskfire login         Login to Taskfire
+  taskfire signup        Signup to Taskfire
+  taskfire init [dir]    Initialise a new flow
+
+Options:
+  --version      Show version number                                   [boolean]
+  --token, -t    Authentication token
+  --project, -p  Project to target
+  --silent, -s   Silent mode (no stdout)
+  -h             Show help                                             [boolean]",
+]
+`;

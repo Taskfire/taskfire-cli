@@ -15,7 +15,7 @@ import config from './cmds/config'
 import init from './cmds/init'
 import output from './helpers/output'
 
-yargs
+const cli = yargs
   .usage('Usage: taskfire <command> [options]')
   .scriptName('taskfire')
   .command(flows)
@@ -45,7 +45,7 @@ yargs
   .strict()
   .demandCommand(1)
   .fail((msg, err) => {
-    console.log(err)
+    // console.log(err)
     output.space()
     if (msg || (err && err.message)) {
       output.accent(msg || (err && err.message))
@@ -55,4 +55,7 @@ yargs
   })
   .recommendCommands()
   .help('h')
-  .parse()
+  // .help('help')
+  // .parse()
+
+export default cli

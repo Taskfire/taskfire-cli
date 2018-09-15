@@ -4,7 +4,7 @@ import pad from 'pad'
 
 function output (msg, args = {}) {
   if (args.s || args.silent) return
-  console.log(msg)
+  if (process.env.NODE_ENV !== 'test') console.log(msg)
 }
 
 output.block = function outputBlock (msg, args) {
@@ -18,6 +18,10 @@ output.error = function outputError (msg, exit = true) {
 
 output.success = function outputSuccess (msg, args) {
   output(chalk.green(msg), args)
+}
+
+output.info = function outputInfo (msg, args) {
+  output(`${chalk.cyan('[INFO]')} ${msg}'`, args)
 }
 
 output.accent = function outputAccent (msg, args) {

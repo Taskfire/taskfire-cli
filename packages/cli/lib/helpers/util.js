@@ -6,7 +6,7 @@ Object.defineProperty(exports, "__esModule", {
 exports.forEach = forEach;
 function forEach(array, fn) {
   for (let i = 0; i < array.length; i += 1) {
-    const res = fn(array[i]);
+    const res = fn(array[i], i);
     if (res !== undefined) {
       return res;
     }

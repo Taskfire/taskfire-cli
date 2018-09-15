@@ -29,8 +29,10 @@ const columns = [{
   width: 26
 }]; // import yargs from 'yargs'
 async function handler(args) {
+  console.log('hllo');
   const client = await (0, _client2.default)(args);
   const list = await client.projects.list();
+  console.log('hllo 2');
   _output2.default.block((0, _table2.default)(columns, list), args);
 }
 

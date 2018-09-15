@@ -29,6 +29,10 @@ var _lang = require('../lang');
 
 var _lang2 = _interopRequireDefault(_lang);
 
+var _output = require('../output');
+
+var _output2 = _interopRequireDefault(_output);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 const packageFiles = ['taskfire.json', 'taskfire.yml', 'taskfire.yaml', '.taskfirerc', 'package.json', // Nodejs
@@ -45,9 +49,15 @@ function getDeploymentFlowName(args) {
   const packageName = getPackageName(args);
   if (packageName) return packageName;
 
-  // Otherwise use git name (if git repo)
+  // Otherwise use git name (if git repo and remote-url)
   if (_fsExtra2.default.existsSync(_path2.default.resolve(cwd, '.git'))) {
-    const gitName = _gitRepoName2.default.sync();
+    let gitName;
+    try {
+      gitName = _gitRepoName2.default.sync(cwd);
+    } catch (e) {
+      _output2.default.info('No remote-url found in .git');
+    }
+
     if (gitName) return gitName;
   }
 
