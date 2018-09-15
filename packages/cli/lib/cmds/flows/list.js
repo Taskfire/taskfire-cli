@@ -27,8 +27,8 @@ const columns = [{
   name: 'Name',
   key: 'name',
   width: 26
-}]; // import yargs from 'yargs'
-// import createClient from '../../helpers/client'
+}];
+
 async function handler(args) {
   const flows = await (0, _request2.default)(args, {
     method: 'GET',

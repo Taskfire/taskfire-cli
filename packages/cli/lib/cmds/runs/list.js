@@ -5,9 +5,9 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.handler = handler;
 
-var _client = require('../../helpers/client');
+var _request = require('../../helpers/request');
 
-var _client2 = _interopRequireDefault(_client);
+var _request2 = _interopRequireDefault(_request);
 
 var _table = require('../../helpers/table');
 
@@ -29,8 +29,11 @@ const columns = [{
   width: 26
 }]; // import yargs from 'yargs'
 async function handler(args) {
-  const client = await (0, _client2.default)(args);
-  const tasks = await client.runs.list();
+  const tasks = await (0, _request2.default)(args, {
+    method: 'GET',
+    url: '/runs'
+  });
+
   _output2.default.block((0, _table2.default)(columns, tasks), args);
 }
 

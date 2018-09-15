@@ -39,11 +39,9 @@ var _getName2 = _interopRequireDefault(_getName);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-// import createClient from '../helpers/client'
 async function handler(args) {
   // Get a list of files and upload them
   const files = await (0, _getPaths.getUploadPaths)(args);
-  // const client = await createClient(args, true, true)
 
   // No files
   if (files.length === 0) {
@@ -102,7 +100,8 @@ async function handler(args) {
 
   (0, _output2.default)('View your deployment at:');
   _output2.default.accent('');
-} // import yargs from 'yargs'
+}
+
 exports.default = {
   command: 'deploy [dir]',
   desc: 'Deploy your flow',

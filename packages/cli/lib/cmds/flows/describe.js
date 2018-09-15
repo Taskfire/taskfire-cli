@@ -25,6 +25,8 @@ async function handler(args) {
     _output2.default.accent('No resource found');
   }
 
+  _output2.default.error('Test');
+
   _output2.default.record(flow, args);
 }
 

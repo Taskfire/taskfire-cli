@@ -9,6 +9,10 @@ var _yargs = require('yargs');
 
 var _yargs2 = _interopRequireDefault(_yargs);
 
+var _raven = require('raven');
+
+var _raven2 = _interopRequireDefault(_raven);
+
 var _flows = require('./cmds/flows');
 
 var _flows2 = _interopRequireDefault(_flows);
@@ -73,7 +77,11 @@ const cli = _yargs2.default.usage('Usage: taskfire <command> [options]').scriptN
   alias: 's',
   describe: 'Silent mode (no stdout)'
 }).strict().demandCommand(1).fail((msg, err) => {
-  console.log(err);
+  console.log('ERROR', msg, err);
+  if (err) {
+    // Need to make sure we filter out known errors
+    _raven2.default.captureException(err);
+  }
   _output2.default.space();
   if (msg || err && err.message) {
     _output2.default.accent(msg || err && err.message);

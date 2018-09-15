@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 
 import yargs from 'yargs'
+import Raven from 'raven'
 import flows from './cmds/flows'
 import projects from './cmds/projects'
 import login from './cmds/login'
@@ -45,7 +46,9 @@ const cli = yargs
   .strict()
   .demandCommand(1)
   .fail((msg, err) => {
-    console.log(err)
+    if (err && process.env.NODE_ENV !== 'development' && process.env.NODE_ENV !== 'test') {
+      Raven.captureException(err)
+    }
     output.space()
     if (msg || (err && err.message)) {
       output.accent(msg || (err && err.message))

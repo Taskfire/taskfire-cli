@@ -5,9 +5,9 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.handler = handler;
 
-var _client = require('../../helpers/client');
+var _request = require('../../helpers/request');
 
-var _client2 = _interopRequireDefault(_client);
+var _request2 = _interopRequireDefault(_request);
 
 var _output = require('../../helpers/output');
 
@@ -17,12 +17,13 @@ var _config = require('../../helpers/config');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-// import createTable from '../../helpers/table'
 async function handler(args) {
-  const client = await (0, _client2.default)(args);
-
-  const project = await client.projects.create({
-    name: args.name
+  const project = await (0, _request2.default)(args, {
+    method: 'POST',
+    url: '/projects',
+    body: {
+      name: args.name
+    }
   });
 
   if (args.default) {
@@ -31,7 +32,8 @@ async function handler(args) {
 
   _output2.default.success(`Created project: ${project.name}`, args);
   // output.block(createTable(columns, tasks))
-} // import yargs from 'yargs'
+}
+
 exports.default = {
   command: 'create [name]',
   desc: 'Create a new project',
