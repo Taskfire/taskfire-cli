@@ -1,5 +1,4 @@
-// import yargs from 'yargs'
-import createClient from '../../helpers/client'
+import request from '../../helpers/request'
 import createTable from '../../helpers/table'
 import output from '../../helpers/output'
 
@@ -14,9 +13,12 @@ const columns = [{
 }]
 
 export async function handler (args) {
-  const client = await createClient(args)
-  const tasks = await client.flows.list()
-  output.block(createTable(columns, tasks), args)
+  const flows = await request(args, {
+    method: 'GET',
+    url: '/flows',
+  })
+
+  output.block(createTable(columns, flows), args)
 }
 
 export default {

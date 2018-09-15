@@ -1,9 +1,8 @@
-import createClient from '../../helpers/client'
+import request from '../../helpers/request'
 import output from '../../helpers/output'
 
 export async function handler (args) {
-  const client = await createClient(args)
-  const resp = await client.request({
+  const resp = await request(args, {
     method: 'PUT',
     url: `/variables/${args.name}`,
     body: {

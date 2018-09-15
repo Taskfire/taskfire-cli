@@ -1,13 +1,12 @@
-import createClient from '../helpers/client'
+import request from '../helpers/request'
 import output from '../helpers/output'
 
 async function handler (args) {
-  const client = await createClient(args)
-
-  const logs = await client.request({
+  const logs = await request(args, {
     url: `/runs/${args.runId}/logs`,
     method: 'GET',
   })
+
   output(logs.join('\n'))
 }
 

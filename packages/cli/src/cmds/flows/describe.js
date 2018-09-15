@@ -1,31 +1,27 @@
-// import yargs from 'yargs'
-import createClient from '../../helpers/client'
-// import createTable from '../../helpers/table'
+import request from '../../helpers/request'
 import output from '../../helpers/output'
 
 export async function handler (args) {
-  const client = await createClient(args)
-  const flows = await client.flows.list({
-    where: {
-      name: args.name,
-    },
+  const flow = await request(args, {
+    method: 'GET',
+    url: `/flows/${args.flow_id}`,
   })
 
-  if (!flows || !flows[0]) {
+  if (!flow) {
     output.accent('No resource found')
   }
 
-  output.record(flows[0], args)
+  output.record(flow, args)
 }
 
 export default {
-  command: 'describe <name>',
+  command: 'describe <flow_id>',
   desc: 'Describe the specified flow',
   handler,
   builder: (yargs) => {
     return yargs
-      .positional('name', {
-        describe: 'name of the flow',
+      .positional('flow_id', {
+        describe: 'ID of the flow',
       })
   },
 }

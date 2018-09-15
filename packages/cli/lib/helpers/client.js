@@ -27,7 +27,7 @@ var _args = require('./args');
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 // import taskfire from '../../../taskfire-nodejs/lib/index'
-const BASE_URL = process.env.NODE_ENV === 'development' ? 'http://localhost:4000' : 'https://api.taskfire.io/v1';
+const BASE_URL = process.env.NODE_ENV === 'development' ? 'http://localhost:4000/v1' : 'https://api.taskfire.io/v1';
 
 exports.default = async function createClient(args, requireAuth, requireSite = false) {
   const auth = await (0, _auth2.default)(args, requireAuth, requireSite);

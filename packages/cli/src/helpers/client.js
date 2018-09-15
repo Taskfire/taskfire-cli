@@ -7,7 +7,7 @@ import { setBasicConfig } from './config'
 import { getProjectName } from './args'
 
 const BASE_URL = process.env.NODE_ENV === 'development'
-  ? 'http://localhost:4000'
+  ? 'http://localhost:4000/v1'
   : 'https://api.taskfire.io/v1'
 
 export default async function createClient (args, requireAuth, requireSite = false) {

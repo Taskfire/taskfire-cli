@@ -50,6 +50,7 @@
     "fs-extra": "^7.0.0",
     "git-repo-name": "^0.6.0",
     "glob-gitignore": "^1.0.9",
+    "graphql-request": "^1.8.2",
     "ignore": "^5.0.2",
     "ignore-by-default": "^1.0.1",
     "inquirer": "^6.2.0",

@@ -14,9 +14,9 @@ var _prompt2 = _interopRequireDefault(_prompt);
 
 var _promiseCallbacks = require('promise-callbacks');
 
-var _client = require('../helpers/client');
+var _request = require('../helpers/request');
 
-var _client2 = _interopRequireDefault(_client);
+var _request2 = _interopRequireDefault(_request);
 
 var _output = require('../helpers/output');
 
@@ -44,21 +44,19 @@ const schema = {
 };
 
 async function handler(args) {
-  const client = await (0, _client2.default)(args, false);
-
   // Get the login details
   _prompt2.default.start();
 
   const { username, password } = await promptGet(schema);
 
-  const login = await client.request({
+  const login = await (0, _request2.default)(args, {
     method: 'POST',
     url: '/login',
     body: {
       email: username,
       password
     }
-  }).catch(() => {
+  }, false).catch(() => {
     throw new Error(_chalk2.default.red('Invalid credentials'));
   });
 

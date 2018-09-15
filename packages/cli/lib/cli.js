@@ -73,7 +73,7 @@ const cli = _yargs2.default.usage('Usage: taskfire <command> [options]').scriptN
   alias: 's',
   describe: 'Silent mode (no stdout)'
 }).strict().demandCommand(1).fail((msg, err) => {
-  // console.log(err)
+  console.log(err);
   _output2.default.space();
   if (msg || err && err.message) {
     _output2.default.accent(msg || err && err.message);

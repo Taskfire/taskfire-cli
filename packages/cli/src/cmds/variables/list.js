@@ -1,5 +1,4 @@
-// import yargs from 'yargs'
-import createClient from '../../helpers/client'
+import request from '../../helpers/request'
 import createTable from '../../helpers/table'
 import output from '../../helpers/output'
 
@@ -14,8 +13,7 @@ const columns = [{
 }]
 
 export async function handler (args) {
-  const client = await createClient(args, true, true)
-  const list = await client.request({
+  const list = await request(args, {
     url: '/variables',
     method: 'GET',
   })

@@ -1,10 +1,8 @@
-import createClient from '../helpers/client'
+import request from '../helpers/request'
 import output from '../helpers/output'
 
 async function handler (args) {
-  const client = await createClient(args)
-
-  const run = await client.request({
+  const run = await request(args, {
     url: `/flows/${args.flowId}/run`,
     method: 'PUT',
   })

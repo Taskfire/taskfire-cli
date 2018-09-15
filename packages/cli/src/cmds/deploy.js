@@ -1,8 +1,7 @@
-// import yargs from 'yargs'
 import fs from 'fs-extra'
 import path from 'path'
 import shajs from 'sha.js'
-import createClient from '../helpers/client'
+import request from '../helpers/request'
 import handleError from '../helpers/errors'
 import output from '../helpers/output'
 import { getUploadPaths } from '../helpers/deploy/get-paths'
@@ -12,7 +11,6 @@ import getDeploymentFlowName from '../helpers/deploy/get-name'
 export async function handler (args) {
   // Get a list of files and upload them
   const files = await getUploadPaths(args)
-  const client = await createClient(args, true, true)
 
   // No files
   if (files.length === 0) {
@@ -23,7 +21,7 @@ export async function handler (args) {
   const promises = files.map(async (file) => {
     output(`Uploading ${file}`, args)
     const stream = fs.createReadStream(file)
-    return client.request({
+    return request({
       url: '/files',
       method: 'POST',
       body: stream,
@@ -31,7 +29,7 @@ export async function handler (args) {
         'Content-Type': 'application/octet-stream',
       },
       json: false,
-    })
+    }, true, true)
   })
 
   await Promise.all(promises)
@@ -58,14 +56,14 @@ export async function handler (args) {
   const deployFiles = await Promise.all(deployFilesPromises)
 
   // Deploy!
-  await client.request({
+  await request(args, {
     url: '/deploy',
     method: 'POST',
     body: {
       flow: name,
       files: deployFiles,
     },
-  })
+  }, true, true)
 
   output.success('Deployment complete', args)
 

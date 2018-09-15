@@ -45,7 +45,7 @@ const cli = yargs
   .strict()
   .demandCommand(1)
   .fail((msg, err) => {
-    // console.log(err)
+    console.log(err)
     output.space()
     if (msg || (err && err.message)) {
       output.accent(msg || (err && err.message))

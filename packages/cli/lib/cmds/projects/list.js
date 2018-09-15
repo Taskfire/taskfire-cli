@@ -32,7 +32,7 @@ async function handler(args) {
   const list = await (0, _request2.default)(args, {
     method: 'GET',
     url: '/projects'
-  }, true);
+  });
   _output2.default.block((0, _table2.default)(columns, list), args);
 }
 

@@ -1,7 +1,7 @@
 import chalk from 'chalk'
 import prompt from 'prompt'
 import { promisify } from 'promise-callbacks'
-import createClient from '../helpers/client'
+import request from '../helpers/request'
 import output from '../helpers/output'
 import { addAuthConfig } from '../helpers/config'
 
@@ -23,21 +23,19 @@ const schema = {
 }
 
 async function handler (args) {
-  const client = await createClient(args, false)
-
   // Get the login details
   prompt.start()
 
   const { username, password } = await promptGet(schema)
 
-  const login = await client.request({
+  const login = await request(args, {
     method: 'POST',
     url: '/login',
     body: {
       email: username,
       password,
     },
-  }).catch(() => {
+  }, false).catch(() => {
     throw new Error(chalk.red('Invalid credentials'))
   })
 

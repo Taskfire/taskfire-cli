@@ -6,20 +6,25 @@ import { setBasicConfig } from './config'
 import { getProjectName } from './args'
 
 const BASE_URL = process.env.NODE_ENV === 'development'
-  ? 'http://localhost:4000'
+  ? 'http://localhost:4000/v1'
   : 'https://api.taskfire.io/v1'
 
-export default async function makeRequest (args, req, requireAuth, requireSite = false) {
+export default async function makeRequest (args, req, requireAuth = true, requireSite = false) {
   const auth = await getAuth(args, requireAuth, requireSite)
-  const projectName = await getProjectName(args)
+  const projectName = requireSite && await getProjectName(args)
 
   const reqObj = {
-    ...req,
-    query: req.query || {},
     baseUrl: BASE_URL,
+    json: true,
     auth: auth && {
       bearer: auth.token,
     },
+    ...req,
+    query: req.query || {},
+  }
+
+  if (projectName) {
+    reqObj.query.project = projectName
   }
 
   // If we need a project/site then we should
@@ -54,5 +59,7 @@ export default async function makeRequest (args, req, requireAuth, requireSite =
     reqObj.query.project = selectedProject.name
   }
 
-  return request(reqObj)
+  const resp = await request(reqObj)
+
+  return resp.data
 }

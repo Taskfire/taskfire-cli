@@ -16,6 +16,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 // import yargs from 'yargs'
 exports.default = {
+  scriptName: 'taskfire projects',
   command: 'projects',
   desc: 'Manage projects',
   builder: yargs => {

@@ -1,14 +1,14 @@
-// import yargs from 'yargs'
-import createClient from '../../helpers/client'
-// import createTable from '../../helpers/table'
+import request from '../../helpers/request'
 import output from '../../helpers/output'
 import { setBasicConfig } from '../../helpers/config'
 
 export async function handler (args) {
-  const client = await createClient(args)
-
-  const project = await client.projects.create({
-    name: args.name,
+  const project = await request(args, {
+    method: 'POST',
+    url: '/projects',
+    body: {
+      name: args.name,
+    },
   })
 
   if (args.default) {

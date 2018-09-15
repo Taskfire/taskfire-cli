@@ -1,7 +1,7 @@
 import chalk from 'chalk'
 import prompt from 'prompt'
 import { promisify } from 'promise-callbacks'
-import createClient from '../helpers/client'
+import request from '../helpers/request'
 import output from '../helpers/output'
 import { addAuthConfig } from '../helpers/config'
 
@@ -29,8 +29,6 @@ const schema = {
 }
 
 async function handler (args) {
-  const client = await createClient(args, false)
-
   // Get the login details
   prompt.start()
 
@@ -38,7 +36,7 @@ async function handler (args) {
     email, password, username, name,
   } = await promptGet(schema)
 
-  const signup = await client.request({
+  const signup = await request(args, {
     method: 'POST',
     url: '/signup',
     body: {

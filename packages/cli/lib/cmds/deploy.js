@@ -17,9 +17,9 @@ var _sha = require('sha.js');
 
 var _sha2 = _interopRequireDefault(_sha);
 
-var _client = require('../helpers/client');
+var _request = require('../helpers/request');
 
-var _client2 = _interopRequireDefault(_client);
+var _request2 = _interopRequireDefault(_request);
 
 var _errors = require('../helpers/errors');
 
@@ -39,10 +39,11 @@ var _getName2 = _interopRequireDefault(_getName);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+// import createClient from '../helpers/client'
 async function handler(args) {
   // Get a list of files and upload them
   const files = await (0, _getPaths.getUploadPaths)(args);
-  const client = await (0, _client2.default)(args, true, true);
+  // const client = await createClient(args, true, true)
 
   // No files
   if (files.length === 0) {
@@ -53,7 +54,7 @@ async function handler(args) {
   const promises = files.map(async file => {
     (0, _output2.default)(`Uploading ${file}`, args);
     const stream = _fsExtra2.default.createReadStream(file);
-    return client.request({
+    return (0, _request2.default)({
       url: '/files',
       method: 'POST',
       body: stream,
@@ -61,7 +62,7 @@ async function handler(args) {
         'Content-Type': 'application/octet-stream'
       },
       json: false
-    });
+    }, true, true);
   });
 
   await Promise.all(promises);
@@ -88,14 +89,14 @@ async function handler(args) {
   const deployFiles = await Promise.all(deployFilesPromises);
 
   // Deploy!
-  await client.request({
+  await (0, _request2.default)(args, {
     url: '/deploy',
     method: 'POST',
     body: {
       flow: name,
       files: deployFiles
     }
-  });
+  }, true, true);
 
   _output2.default.success('Deployment complete', args);
 
