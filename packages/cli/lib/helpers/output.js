@@ -62,4 +62,12 @@ output.record = function outputRecord(record, args) {
   });
 };
 
+output.header = function outputHeader(title, args) {
+  const len = title.length;
+  const line = new Array(len + 2).join('=');
+  output(line, args);
+  output(title.toUpperCase(), args);
+  output(line, args);
+};
+
 exports.default = output;

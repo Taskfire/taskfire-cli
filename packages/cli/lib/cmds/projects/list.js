@@ -5,9 +5,9 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.handler = handler;
 
-var _request = require('../../helpers/request');
+var _graphql = require('../../helpers/graphql');
 
-var _request2 = _interopRequireDefault(_request);
+var _graphql2 = _interopRequireDefault(_graphql);
 
 var _table = require('../../helpers/table');
 
@@ -19,6 +19,16 @@ var _output2 = _interopRequireDefault(_output);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+const PROJECT_QUERY = `
+  query {
+    projects: allProjects {
+      id
+      name
+    }
+  }
+`; // import yargs from 'yargs'
+
+
 const columns = [{
   name: 'ID',
   key: 'id',
@@ -27,13 +37,11 @@ const columns = [{
   name: 'Name',
   key: 'name',
   width: 26
-}]; // import yargs from 'yargs'
+}];
+
 async function handler(args) {
-  const list = await (0, _request2.default)(args, {
-    method: 'GET',
-    url: '/projects'
-  });
-  _output2.default.block((0, _table2.default)(columns, list), args);
+  const list = await (0, _graphql2.default)(args, PROJECT_QUERY);
+  _output2.default.block((0, _table2.default)(columns, list.projects), args);
 }
 
 exports.default = {

@@ -49,18 +49,20 @@ async function handler(args) {
   // Require a projectName
   const project = await (0, _project.getProjectName)(args, true);
 
+  console.log(project);
+
   // Upload each file and wait for them to complete
   const promises = files.map(async file => {
     (0, _output2.default)(`Uploading ${file}`, args);
     const stream = _fsExtra2.default.createReadStream(file);
-    return (0, _request2.default)({
+    return (0, _request2.default)(args, {
       url: '/files',
       method: 'POST',
       body: stream,
       headers: {
         'Content-Type': 'application/octet-stream'
       },
-      query: {
+      qs: {
         project
       },
       json: false
@@ -98,7 +100,7 @@ async function handler(args) {
       flow: name,
       files: deployFiles
     },
-    query: {
+    qs: {
       project
     }
   });

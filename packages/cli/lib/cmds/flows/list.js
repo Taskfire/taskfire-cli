@@ -5,9 +5,9 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.handler = handler;
 
-var _request = require('../../helpers/request');
+var _graphql = require('../../helpers/graphql');
 
-var _request2 = _interopRequireDefault(_request);
+var _graphql2 = _interopRequireDefault(_graphql);
 
 var _table = require('../../helpers/table');
 
@@ -19,23 +19,32 @@ var _output2 = _interopRequireDefault(_output);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+const FLOW_QUERY = `
+  query {
+    flows: allFlows {
+      id
+      name
+      project {
+        id
+        name
+      }
+    }
+  }
+`;
+
 const columns = [{
   name: 'ID',
   key: 'id',
   width: 28
 }, {
-  name: 'Name',
-  key: 'name',
-  width: 26
+  name: 'Project/Flow',
+  key: flow => `${flow.project.name}/${flow.name}`,
+  minWidth: 30
 }];
 
 async function handler(args) {
-  const flows = await (0, _request2.default)(args, {
-    method: 'GET',
-    url: '/flows'
-  });
-
-  _output2.default.block((0, _table2.default)(columns, flows), args);
+  const resp = await (0, _graphql2.default)(args, FLOW_QUERY);
+  _output2.default.block((0, _table2.default)(columns, resp.flows), args);
 }
 
 exports.default = {

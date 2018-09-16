@@ -1,7 +1,16 @@
 // import yargs from 'yargs'
-import request from '../../helpers/request'
+import request from '../../helpers/graphql'
 import createTable from '../../helpers/table'
 import output from '../../helpers/output'
+
+const PROJECT_QUERY = `
+  query {
+    projects: allProjects {
+      id
+      name
+    }
+  }
+`
 
 const columns = [{
   name: 'ID',
@@ -14,11 +23,8 @@ const columns = [{
 }]
 
 export async function handler (args) {
-  const list = await request(args, {
-    method: 'GET',
-    url: '/projects',
-  })
-  output.block(createTable(columns, list), args)
+  const list = await request(args, PROJECT_QUERY)
+  output.block(createTable(columns, list.projects), args)
 }
 
 export default {

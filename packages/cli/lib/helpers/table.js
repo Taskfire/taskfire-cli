@@ -42,7 +42,17 @@ function createTable(columns, rows) {
     return NO_RESOURCE_MSG;
   }
   const head = columns.map(({ name }) => _chalk2.default.grey(name));
-  const colWidths = columns.map(({ width }) => width || 10);
+  const data = rows.map(row => columns.map(({ key }) => {
+    return typeof key === 'function' ? key(row) : row[key];
+  }));
+  const colWidths = columns.map(({ width, maxWidth, minWidth }, i) => {
+    if (width) return width;
+    if (maxWidth || minWidth) {
+      const max = data.reduce((agg, val) => Math.max(val[i].length, agg), 0);
+      return Math.min(Math.max(minWidth || 10, max), maxWidth || 100);
+    }
+    return 10;
+  });
   const table = new _cliTable2.default({
     head,
     colWidths,
@@ -52,7 +62,6 @@ function createTable(columns, rows) {
     },
     chars
   });
-  const data = rows.map(row => columns.map(({ key }) => row[key]));
   table.push(...data);
   return table.toString();
 }

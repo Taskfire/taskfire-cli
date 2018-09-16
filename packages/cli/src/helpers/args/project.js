@@ -9,7 +9,7 @@ import output from '../output'
 export async function getProjectName (args, force) {
   // If we need a project/site then we should
   // ask the user for it (as no default is present)
-  const project = searchForProjectName(args)
+  const project = await searchForProjectName(args)
   if (project) return project
 
   // We don't have a project still
@@ -41,7 +41,7 @@ export async function askForProject (args) {
   const projects = await request(args, {
     method: 'GET',
     url: '/projects',
-  }, false, false)
+  })
 
   if (!projects.length) {
     output.error('You must create a project before deploying your code')
