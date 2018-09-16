@@ -3,7 +3,7 @@ import fs from 'fs-extra'
 import repoName from 'git-repo-name'
 import yml from 'js-yaml'
 import { forEach } from '../util'
-import { getCwd } from '../args'
+import { getCwd } from './paths'
 import getLanguage from '../lang'
 import output from '../output'
 
@@ -19,7 +19,7 @@ const packageFiles = [
   'app.yaml',
 ]
 
-export default function getDeploymentFlowName (args) {
+export function getFlowName (args) {
   if (args.flow) return args.flow
 
   const cwd = getCwd(args)

@@ -26,15 +26,15 @@ var _matchSorter2 = _interopRequireDefault(_matchSorter);
 
 var _globGitignore = require('glob-gitignore');
 
-var _getName = require('../helpers/deploy/get-name');
+var _flow = require('../helpers/args/flow');
 
-var _getName2 = _interopRequireDefault(_getName);
+var _flow2 = _interopRequireDefault(_flow);
 
 var _output = require('../helpers/output');
 
 var _output2 = _interopRequireDefault(_output);
 
-var _args = require('../helpers/args');
+var _paths = require('../helpers/args/paths');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -58,7 +58,7 @@ async function handler(args) {
       type: 'input',
       name: 'name',
       message: 'name',
-      default: await (0, _getName2.default)(args)
+      default: await (0, _flow2.default)(args)
     });
   }
 
@@ -93,7 +93,7 @@ async function handler(args) {
     _output2.default.error('Invalid flow template specified');
   }
 
-  const dest = (0, _args.getCwd)(args);
+  const dest = (0, _paths.getCwd)(args);
 
   // Check for existing directory
   if (_fsExtra2.default.existsSync(dest) && !(args.force && args.f)) {

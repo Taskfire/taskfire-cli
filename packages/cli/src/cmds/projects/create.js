@@ -1,6 +1,6 @@
 import request from '../../helpers/request'
 import output from '../../helpers/output'
-import { setBasicConfig } from '../../helpers/config'
+import { setBasicConfig } from '../../helpers/args/config'
 
 export async function handler (args) {
   const project = await request(args, {

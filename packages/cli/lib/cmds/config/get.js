@@ -5,7 +5,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.handler = handler;
 
-var _config = require('../../helpers/config');
+var _config = require('../../helpers/args/config');
 
 var _output = require('../../helpers/output');
 

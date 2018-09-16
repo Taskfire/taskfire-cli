@@ -1,4 +1,4 @@
-import { setBasicConfig } from '../../helpers/config'
+import { setBasicConfig } from '../../helpers/args/config'
 import output from '../../helpers/output'
 
 export async function handler (args) {

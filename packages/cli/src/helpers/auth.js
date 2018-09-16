@@ -1,6 +1,6 @@
 import chalk from 'chalk'
 import handleError from './errors'
-import { getAuthConfig } from './config'
+import { getAuthConfig } from './args/config'
 
 const NO_TOKEN_MSG = `
   ${chalk.red('No authentication token')}
@@ -11,7 +11,6 @@ const NO_TOKEN_MSG = `
 
 export default async function getAuth (args, requireAuth = true) {
   let token = args.t || args.token
-  const project = args.p || args.project
 
   if (!token) {
     // TODO: Get token from the cache
@@ -26,8 +25,5 @@ export default async function getAuth (args, requireAuth = true) {
     handleError(NO_TOKEN_MSG)
   }
 
-  return {
-    token,
-    project,
-  }
+  return token
 }

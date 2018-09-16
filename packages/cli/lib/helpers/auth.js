@@ -12,7 +12,7 @@ var _errors = require('./errors');
 
 var _errors2 = _interopRequireDefault(_errors);
 
-var _config = require('./config');
+var _config = require('./args/config');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -25,7 +25,6 @@ const NO_TOKEN_MSG = `
 
 exports.default = async function getAuth(args, requireAuth = true) {
   let token = args.t || args.token;
-  const project = args.p || args.project;
 
   if (!token) {
     // TODO: Get token from the cache
@@ -40,8 +39,5 @@ exports.default = async function getAuth(args, requireAuth = true) {
     (0, _errors2.default)(NO_TOKEN_MSG);
   }
 
-  return {
-    token,
-    project
-  };
+  return token;
 };

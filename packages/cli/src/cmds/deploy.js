@@ -4,18 +4,21 @@ import shajs from 'sha.js'
 import request from '../helpers/request'
 import handleError from '../helpers/errors'
 import output from '../helpers/output'
-import { getUploadPaths } from '../helpers/deploy/get-paths'
-import { getCwd } from '../helpers/args'
-import getDeploymentFlowName from '../helpers/deploy/get-name'
+import { getPaths, getCwd } from '../helpers/args/paths'
+import { getFlowName } from '../helpers/args/flow'
+import { getProjectName } from '../helpers/args/project'
 
 export async function handler (args) {
   // Get a list of files and upload them
-  const files = await getUploadPaths(args)
+  const files = await getPaths(args)
 
   // No files
   if (files.length === 0) {
     handleError('No files found')
   }
+
+  // Require a projectName
+  const project = await getProjectName(args, true)
 
   // Upload each file and wait for them to complete
   const promises = files.map(async (file) => {
@@ -28,8 +31,11 @@ export async function handler (args) {
       headers: {
         'Content-Type': 'application/octet-stream',
       },
+      query: {
+        project,
+      },
       json: false,
-    }, true, true)
+    })
   })
 
   await Promise.all(promises)
@@ -38,7 +44,7 @@ export async function handler (args) {
   output.space(args)
 
   // Upload the deployment data
-  const name = await getDeploymentFlowName(args)
+  const name = await getFlowName(args)
   output.accent(`Deploying flow: ${name}`, args)
 
   // Send deploy request
@@ -63,7 +69,10 @@ export async function handler (args) {
       flow: name,
       files: deployFiles,
     },
-  }, true, true)
+    query: {
+      project,
+    },
+  })
 
   output.success('Deployment complete', args)
 

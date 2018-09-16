@@ -3,7 +3,7 @@ import prompt from 'prompt'
 import { promisify } from 'promise-callbacks'
 import request from '../helpers/request'
 import output from '../helpers/output'
-import { addAuthConfig } from '../helpers/config'
+import { addAuthConfig } from '../helpers/args/config'
 
 const promptGet = promisify.method(prompt, 'get')
 

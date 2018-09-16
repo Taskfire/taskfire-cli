@@ -77,9 +77,7 @@ const cli = _yargs2.default.usage('Usage: taskfire <command> [options]').scriptN
   alias: 's',
   describe: 'Silent mode (no stdout)'
 }).strict().demandCommand(1).fail((msg, err) => {
-  console.log('ERROR', msg, err);
-  if (err) {
-    // Need to make sure we filter out known errors
+  if (err && process.env.NODE_ENV !== 'development' && process.env.NODE_ENV !== 'test') {
     _raven2.default.captureException(err);
   }
   _output2.default.space();

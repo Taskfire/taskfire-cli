@@ -4,9 +4,9 @@ import inquirer from 'inquirer'
 import autoCompletePrompt from 'inquirer-autocomplete-prompt'
 import matchSorter from 'match-sorter'
 import { glob } from 'glob-gitignore'
-import getDeploymentFlowName from '../helpers/deploy/get-name'
+import getFlowName from '../helpers/args/flow'
 import output from '../helpers/output'
-import { getCwd } from '../helpers/args'
+import { getCwd } from '../helpers/args/paths'
 
 // const GIT_URL = 'https://github.com/Taskfire/taskfire-cli/tree/v0.2.0/packages/cli/templates'
 
@@ -28,7 +28,7 @@ async function handler (args) {
       type: 'input',
       name: 'name',
       message: 'name',
-      default: await getDeploymentFlowName(args),
+      default: await getFlowName(args),
     })
   }
 

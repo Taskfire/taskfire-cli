@@ -29,24 +29,25 @@ var _output = require('../helpers/output');
 
 var _output2 = _interopRequireDefault(_output);
 
-var _getPaths = require('../helpers/deploy/get-paths');
+var _paths = require('../helpers/args/paths');
 
-var _args = require('../helpers/args');
+var _flow = require('../helpers/args/flow');
 
-var _getName = require('../helpers/deploy/get-name');
-
-var _getName2 = _interopRequireDefault(_getName);
+var _project = require('../helpers/args/project');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 async function handler(args) {
   // Get a list of files and upload them
-  const files = await (0, _getPaths.getUploadPaths)(args);
+  const files = await (0, _paths.getPaths)(args);
 
   // No files
   if (files.length === 0) {
     (0, _errors2.default)('No files found');
   }
+
+  // Require a projectName
+  const project = await (0, _project.getProjectName)(args, true);
 
   // Upload each file and wait for them to complete
   const promises = files.map(async file => {
@@ -59,8 +60,11 @@ async function handler(args) {
       headers: {
         'Content-Type': 'application/octet-stream'
       },
+      query: {
+        project
+      },
       json: false
-    }, true, true);
+    });
   });
 
   await Promise.all(promises);
@@ -69,7 +73,7 @@ async function handler(args) {
   _output2.default.space(args);
 
   // Upload the deployment data
-  const name = await (0, _getName2.default)(args);
+  const name = await (0, _flow.getFlowName)(args);
   _output2.default.accent(`Deploying flow: ${name}`, args);
 
   // Send deploy request
@@ -80,7 +84,7 @@ async function handler(args) {
       // name: path.basename(file),
       sha,
       size: buffer.byteLength,
-      path: _path2.default.relative((0, _args.getCwd)(args), file)
+      path: _path2.default.relative((0, _paths.getCwd)(args), file)
     };
   });
 
@@ -93,8 +97,11 @@ async function handler(args) {
     body: {
       flow: name,
       files: deployFiles
+    },
+    query: {
+      project
     }
-  }, true, true);
+  });
 
   _output2.default.success('Deployment complete', args);
 

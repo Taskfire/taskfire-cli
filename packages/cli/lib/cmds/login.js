@@ -22,7 +22,7 @@ var _output = require('../helpers/output');
 
 var _output2 = _interopRequireDefault(_output);
 
-var _config = require('../helpers/config');
+var _config = require('../helpers/args/config');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
